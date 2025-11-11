@@ -11,10 +11,13 @@ class Job extends Model
 {
     /** @use HasFactory<\Database\Factories\JobFactory> */
     use HasFactory;
+    protected $guarded = [];
 
-    public function tag()
+    public function tag(string $name): void
     {
+        $tag = Tag::firstOrCreate(['name' => strtolower($name)]);
 
+        $this->tags()->attach($tag);
     }
 
     public function tags(): BelongsToMany
